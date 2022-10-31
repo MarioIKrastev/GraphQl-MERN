@@ -1,18 +1,17 @@
-//Mongoose models
-const Project = require("../models/Client");
-const Client = require("../models/Project");
+const Project = require("../models/Project");
+const Client = require("../models/Client");
 
 const {
     GraphQLObjectType,
     GraphQLID,
     GraphQLString,
-    GraphQLNonNull,
-    GraphQLEnumType,
     GraphQLSchema,
     GraphQLList,
+    GraphQLNonNull,
+    GraphQLEnumType,
 } = require("graphql");
 
-//Project type
+// Project Type
 const ProjectType = new GraphQLObjectType({
     name: "Project",
     fields: () => ({
@@ -28,7 +27,8 @@ const ProjectType = new GraphQLObjectType({
         },
     }),
 });
-//Client type
+
+// Client Type
 const ClientType = new GraphQLObjectType({
     name: "Client",
     fields: () => ({
@@ -71,9 +71,11 @@ const RootQuery = new GraphQLObjectType({
     },
 });
 
+// Mutations
 const mutation = new GraphQLObjectType({
     name: "Mutation",
     fields: {
+        // Add a client
         addClient: {
             type: ClientType,
             args: {
@@ -91,15 +93,23 @@ const mutation = new GraphQLObjectType({
                 return client.save();
             },
         },
+        // Delete a client
         deleteClient: {
             type: ClientType,
             args: {
                 id: { type: GraphQLNonNull(GraphQLID) },
             },
             resolve(parent, args) {
-                return Client.findOneAndRemove(args.id);
+                Project.find({ clientId: args.id }).then((projects) => {
+                    projects.forEach((project) => {
+                        project.remove();
+                    });
+                });
+
+                return Client.findByIdAndRemove(args.id);
             },
         },
+        // Add a project
         addProject: {
             type: ProjectType,
             args: {
@@ -125,6 +135,7 @@ const mutation = new GraphQLObjectType({
                     status: args.status,
                     clientId: args.clientId,
                 });
+
                 return project.save();
             },
         },
