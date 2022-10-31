@@ -1,4 +1,6 @@
-const { projects, clients } = require("../sampleData");
+//Mongoose models
+const Project = require("../models/Client");
+const Client = require("../models/Project");
 
 const {
     GraphQLObjectType,
@@ -18,6 +20,22 @@ const ClientType = new GraphQLObjectType({
         phone: { type: GraphQLString },
     }),
 });
+//Project type
+const ProjectType = new GraphQLObjectType({
+    name: "Project",
+    fields: () => ({
+        id: { type: GraphQLID },
+        name: { type: GraphQLString },
+        description: { type: GraphQLString },
+        status: { type: GraphQLString },
+        client: {
+            type: ClientType,
+            resolve(parent, args) {
+                return Client.findById(parent.clientId);
+            },
+        },
+    }),
+});
 
 const RootQuery = new GraphQLObjectType({
     name: "RootQueryType",
@@ -25,14 +43,27 @@ const RootQuery = new GraphQLObjectType({
         clients: {
             type: new GraphQLList(ClientType),
             resolve(parent, args) {
-                return clients;
+                return Client.find();
             },
         },
         client: {
             type: ClientType,
             args: { id: { type: GraphQLID } },
             resolve(parent, args) {
-                return clients.find((client) => client.id === args.id);
+                return Client.findById(args.id);
+            },
+        },
+        projects: {
+            type: new GraphQLList(ProjectType),
+            resolve(parent, args) {
+                return Project.find();
+            },
+        },
+        project: {
+            type: ProjectType,
+            args: { id: { type: GraphQLID } },
+            resolve(parent, args) {
+                return Project.findById(args.id);
             },
         },
     },
