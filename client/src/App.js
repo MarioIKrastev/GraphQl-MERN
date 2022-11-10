@@ -1,20 +1,9 @@
 import Header from "./components/Header";
 import Clients from "./components/Clients";
-import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
-
-const cache = new InMemoryCache({
-    typePolicies: {
-        Query: {
-            fields: {
-                clients: {
-                    merge(existing, incoming) {
-                        return incoming;
-                    },
-                },
-            },
-        },
-    },
-});
+import Projects from "./components/Projects";
+import Form from "./components/Form";
+import { ApolloProvider, ApolloClient } from "@apollo/client";
+import { cache } from "./utils/cache";
 
 const apoloClient = new ApolloClient({
     uri: "http://localhost:5000/graphql",
@@ -27,6 +16,8 @@ function App() {
             <ApolloProvider client={apoloClient}>
                 <Header />
                 <div className="container">
+                    <Form />
+                    <Projects />
                     <Clients />
                 </div>
             </ApolloProvider>
