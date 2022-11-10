@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { FaUser } from "react-icons/fa";
-import { useMutation } from "@apollo/client";
 import { ADD_CLIENT } from "../mutations/clientMutation";
 import { GET_CLIENTS } from "../queries/clients";
+import { useMutation } from "@apollo/client";
 
 export default function Form() {
     const [name, setName] = useState("");
@@ -98,19 +98,21 @@ export default function Form() {
                                     value={phone}
                                     onChange={(e) => setPhone(e.target.value)}
                                 />
-                                <button
-                                    className="btn btn-secondary "
-                                    type="submit"
-                                >
-                                    Submit
-                                </button>
-                                <button
-                                    className="btn btn-primary ml-2"
-                                    type="submit"
-                                    data-dismiss="modal"
-                                >
-                                    Close
-                                </button>
+                                <div className="d-flex justify-content-between">
+                                    <button
+                                        className="btn btn-secondary "
+                                        type="submit"
+                                    >
+                                        Submit
+                                    </button>
+                                    <button
+                                        className="btn btn-primary "
+                                        type="submit"
+                                        data-dismiss="modal"
+                                    >
+                                        Close
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
