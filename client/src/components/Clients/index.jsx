@@ -1,17 +1,13 @@
 import { useQuery } from "@apollo/client";
-import ClientRow from "../components/ClientRow";
-import { GET_CLIENTS } from "../queries/clients";
-import Spinner from "./Spinner";
+import ClientRow from "../ClientRow";
+import { GET_CLIENTS } from "../../queries/clients";
 
 export default function Clients() {
-    const { loading, error, data } = useQuery(GET_CLIENTS);
-
-    if (loading) return <Spinner />;
-    if (error) return <p>Something went wrong</p>;
+    const { data } = useQuery(GET_CLIENTS);
 
     return (
         <>
-            {!loading && !error && (
+            {data && (
                 <table className="table table-hover mt-3">
                     <thead>
                         <tr>
