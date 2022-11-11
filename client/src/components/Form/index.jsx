@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaUser } from "react-icons/fa";
-import { ADD_CLIENT } from "../mutations/clientMutation";
-import { GET_CLIENTS } from "../queries/clients";
+import { ADD_CLIENT } from "../../mutations/clientMutation";
+import { GET_CLIENTS } from "../../queries/clients";
 import { useMutation } from "@apollo/client";
 
 export default function Form() {
