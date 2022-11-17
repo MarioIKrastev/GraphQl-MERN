@@ -7,7 +7,7 @@ export default function ClientInfo({ client, data }) {
     return (
         <>
             <h5 className="mt-5">Client Information</h5>
-            <ul className="list-group">
+            <ul className="list-group mb-5">
                 <li className="list-group-item">
                     <FaIdBadge className="icon" /> {user.name}
                 </li>
