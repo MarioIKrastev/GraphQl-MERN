@@ -5,7 +5,8 @@ import { GET_PROJECT } from "../../queries/projects";
 import Message from "../../components/Message";
 import ClientInfo from "../../components/ClientInfo";
 import { noClient } from "./demo";
-import { projectStatus } from "../../utils/projectStatus";
+import { borderColor, projectStatus } from "../../utils/projectStatus";
+import DeleteProject from "../../components/buttons/DeleteProject";
 
 export default function Project() {
     const { id } = useParams();
@@ -19,10 +20,14 @@ export default function Project() {
     return (
         <>
             {!loading && !error && (
-                <div className="mx-auto w-75 card p-5">
+                <div
+                    className={`mx-auto w-75 card p-5 ${borderColor(
+                        data.project.status
+                    )}`}
+                >
                     <Link
                         to="/"
-                        className="btn btn-light btn-sm w-25 d-inline ms-auto"
+                        className="btn btn-light d-inline ms-auto border border-secondary"
                     >
                         Go back
                     </Link>
@@ -37,6 +42,7 @@ export default function Project() {
                         {data.project.status}
                     </p>
                     <ClientInfo client={data.project.client} data={noClient} />
+                    <DeleteProject projectId={id} />
                 </div>
             )}
         </>

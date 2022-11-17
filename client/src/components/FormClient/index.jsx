@@ -1,16 +1,22 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import { FaUser } from "react-icons/fa";
 import { ADD_CLIENT } from "../../mutations/clientMutation";
 import { GET_CLIENTS } from "../../queries/clients";
 import { useMutation } from "@apollo/client";
 
-export default function Form() {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
+export default function FormClient() {
+    const initState = {
+        name: "",
+        email: "",
+        phone: "",
+    };
+    const [state, updateState] = useReducer(
+        (prev, curr) => updateState({ ...prev, ...curr }),
+        initState
+    );
 
     const [addClient] = useMutation(ADD_CLIENT, {
-        variables: { name, email, phone },
+        variables: { name: state.name, email: state.email, phone: state.phone },
         update(cache, { data: { addClient } }) {
             const { clients } = cache.readQuery({
                 query: GET_CLIENTS,
@@ -26,23 +32,25 @@ export default function Form() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        if (!name || !email || !phone) {
+        if (!state.name || !state.email || !state.phone) {
             return alert("fill all fields");
         }
-        addClient(name, email, phone);
-        setName("");
-        setEmail("");
-        setPhone("");
+        addClient(state.name, state.email, state.phone);
+        updateState({
+            name: "",
+            email: "",
+            phone: "",
+        });
     };
     return (
         <>
             <button
                 type="button"
-                className="btn btn-primary"
+                className="btn btn-secondary"
                 data-toggle="modal"
                 data-target="#addClientModal"
             >
-                <div className="d-flex align-items-center">
+                <div className="d-flex gap-2 align-items-center">
                     <FaUser />
                     <div>Add Client</div>
                 </div>
@@ -79,24 +87,30 @@ export default function Form() {
                                     id="name"
                                     type="text"
                                     className="form-control mb-3"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
+                                    value={state.name}
+                                    onChange={(e) =>
+                                        updateState({ name: e.target.value })
+                                    }
                                 />
                                 <label className="form-label">Email</label>
                                 <input
                                     id="email"
                                     type="email"
                                     className="form-control mb-3"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    value={state.email}
+                                    onChange={(e) =>
+                                        updateState({ email: e.target.value })
+                                    }
                                 />
                                 <label className="form-label">Phone</label>
                                 <input
                                     id="phone"
                                     type="text"
                                     className="form-control mb-3"
-                                    value={phone}
-                                    onChange={(e) => setPhone(e.target.value)}
+                                    value={state.phone}
+                                    onChange={(e) =>
+                                        updateState({ phone: e.target.value })
+                                    }
                                 />
                                 <div className="d-flex justify-content-between">
                                     <button
