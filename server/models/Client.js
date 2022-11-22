@@ -10,5 +10,11 @@ const ClientSchema = mongoose.Schema({
     phone: {
         type: String,
     },
+    projects: {
+        type: Array,
+        required: function() {
+            return this.projects.length > 0
+        } 
+    },
 });
 module.exports = mongoose.model("Client", ClientSchema);

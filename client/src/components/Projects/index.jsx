@@ -9,7 +9,6 @@ export default function Projects() {
 
   if (loading) return <Spinner />;
   if (error) return <Message />;
-  console.log(data);
   return (
     <>
       {data.projects.length > 0 ? (

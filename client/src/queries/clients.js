@@ -7,6 +7,12 @@ const GET_CLIENTS = gql`
             name
             email
             phone
+            projects {
+                id
+                name
+                description
+                status
+            }
         }
     }
 `;
