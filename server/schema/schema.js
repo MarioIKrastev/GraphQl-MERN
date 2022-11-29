@@ -39,14 +39,7 @@ const ClientType = new GraphQLObjectType({
     phone: { type: GraphQLString },
     projects: {
       type: new GraphQLList(ProjectType),
-      async resolve(parent, { }) {
-        const { client } = parent.projects
-        // return await Project.find({},
-        //    (x) => {
-        //     return  x.client.id == parent.id;
-        //   },
-        //   null
-        // ).clone();
+      async resolve(parent, {}) {
         return await Project.find().where({clientId: parent.id });
       },
     },

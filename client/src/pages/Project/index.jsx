@@ -10,7 +10,6 @@ import DeleteProject from "../../components/buttons/DeleteProject";
 
 export default function Project() {
   const { id } = useParams();
-  console.log(id);
   const { loading, error, data } = useQuery(GET_PROJECT, {
     variables: { id },
   });
