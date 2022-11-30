@@ -47,14 +47,13 @@ const ClientType = new GraphQLObjectType({
 });
 //Registration type
 const Register = new GraphQLObjectType({
-  name: 'Register',
+  name: "Register",
   fields: () => ({
     name: { type: GraphQLString },
     email: { type: GraphQLString },
     password: { type: GraphQLString },
-  })
-
-})
+  }),
+});
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",

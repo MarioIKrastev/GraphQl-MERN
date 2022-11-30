@@ -1,7 +1,6 @@
+import axios from "axios";
 import { useReducer } from "react";
-import { ADD_CLIENT } from "../../mutations/clientMutation";
-import { GET_CLIENTS } from "../../queries/clients";
-import { useMutation } from "@apollo/client";
+import { instance } from "../../utils/axios";
 
 export default function FormClient() {
   const initState = {
@@ -14,36 +13,27 @@ export default function FormClient() {
     (prev, curr) => ({ ...prev, ...curr }),
     initState
   );
-
-  const [registerClient] = useMutation(ADD_CLIENT, {
-    variables: {
-      name: state.name,
-      email: state.email,
-      password: state.password,
-      phone: state.phone,
-    },
-    update(cache, { data: { registerClient } }) {
-      const { clients } = cache.readQuery({
-        query: GET_CLIENTS,
-      });
-      cache.writeQuery({
-        query: GET_CLIENTS,
-        data: {
-          clients: [...clients, registerClient],
-        },
-      });
-    },
-  });
   const onClick = (e) => {
     e.preventDefault();
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if (!state.name || !state.email || !state.phone || !state.password) {
-      return alert("fill all fields");
+    try {
+      const res = await axios.post(instance, {
+        body: JSON.stringify({
+          name: state.name,
+          email: state.email,
+          password: state.password,
+          phone: state.phone,
+        }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.status();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
     }
-    registerClient(state.name, state.email, state.phone, state.password);
     updateState({
       name: "",
       email: "",
@@ -60,9 +50,7 @@ export default function FormClient() {
         data-target="#registerClientModal"
         onClick={onClick}
       >
-        <a href="/login">
-          <p className="text-light m-0">Log In</p>
-        </a>
+        <p className="text-light m-0">Log In</p>
       </button>
       <div
         className="modal fade"
