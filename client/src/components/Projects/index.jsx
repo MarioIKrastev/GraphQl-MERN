@@ -12,7 +12,7 @@ export default function Projects() {
   return (
     <>
       {data.projects.length > 0 ? (
-        <div className="gap-1 row mb-5 border p-3">
+        <div className="gap-1 row mb-5 border p-3 test">
           {data.projects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}

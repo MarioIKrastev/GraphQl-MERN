@@ -1,5 +1,4 @@
 import { useReducer } from "react";
-import { FaUser } from "react-icons/fa";
 import { ADD_CLIENT } from "../../mutations/clientMutation";
 import { GET_CLIENTS } from "../../queries/clients";
 import { useMutation } from "@apollo/client";
@@ -12,7 +11,7 @@ export default function FormClient() {
     phone: "",
   };
   const [state, updateState] = useReducer(
-    (prev, curr) => updateState({ ...prev, ...curr }),
+    (prev, curr) => ({ ...prev, ...curr }),
     initState
   );
 
@@ -35,16 +34,20 @@ export default function FormClient() {
       });
     },
   });
+  const onClick = (e) => {
+    e.preventDefault();
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!state.name || !state.email || !state.phone) {
+    if (!state.name || !state.email || !state.phone || !state.password) {
       return alert("fill all fields");
     }
-    registerClient(state.name, state.email, state.phone);
+    registerClient(state.name, state.email, state.phone, state.password);
     updateState({
       name: "",
       email: "",
+      password: "",
       phone: "",
     });
   };
@@ -55,11 +58,11 @@ export default function FormClient() {
         className="btn btn-secondary"
         data-toggle="modal"
         data-target="#registerClientModal"
+        onClick={onClick}
       >
-        <div className="d-flex gap-2 align-items-center">
-          <FaUser />
-          <div>Add Client</div>
-        </div>
+        <a href="/login">
+          <p className="text-light m-0">Log In</p>
+        </a>
       </button>
       <div
         className="modal fade"
@@ -100,6 +103,14 @@ export default function FormClient() {
                   className="form-control mb-3"
                   value={state.email}
                   onChange={(e) => updateState({ email: e.target.value })}
+                />
+                <label className="form-label">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  className="form-control mb-3"
+                  value={state.password}
+                  onChange={(e) => updateState({ password: e.target.value })}
                 />
                 <label className="form-label">Phone</label>
                 <input

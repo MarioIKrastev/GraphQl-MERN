@@ -7,29 +7,31 @@ import Header from "./components/Header";
 import Project from "./pages/Project";
 
 import { cache } from "./utils/cache";
+import FormClient from "./components/FormClient";
 
 const apoloClient = new ApolloClient({
-    uri: "http://localhost:5000/graphql",
-    cache,
+  uri: "http://localhost:5000/graphql",
+  cache,
 });
 
 function App() {
-    return (
-        <>
-            <ApolloProvider client={apoloClient}>
-                <Router>
-                    <Header />
-                    <div className="container">
-                        <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/projects/:id" element={<Project />} />
-                            <Route path="*" element={<NotFound />} />
-                        </Routes>
-                    </div>
-                </Router>
-            </ApolloProvider>
-        </>
-    );
+  return (
+    <>
+      <ApolloProvider client={apoloClient}>
+        <Router>
+          <Header />
+          <div className="container">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<FormClient />} />
+              <Route path="/projects/:id" element={<Project />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
+        </Router>
+      </ApolloProvider>
+    </>
+  );
 }
 
 export default App;
