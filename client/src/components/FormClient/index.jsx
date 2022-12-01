@@ -1,6 +1,4 @@
-import axios from "axios";
 import { useReducer } from "react";
-import { instance } from "../../utils/axios";
 
 export default function FormClient() {
   const initState = {
@@ -20,17 +18,19 @@ export default function FormClient() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(instance, {
+      const response = await fetch("http://localhost:5000/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           name: state.name,
           email: state.email,
           password: state.password,
           phone: state.phone,
         }),
-        headers: { "Content-Type": "application/json" },
       });
-      const data = await res.status();
-      console.log(data);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -109,7 +109,11 @@ export default function FormClient() {
                   onChange={(e) => updateState({ phone: e.target.value })}
                 />
                 <div className="d-flex justify-content-between">
-                  <button className="btn btn-secondary " type="submit">
+                  <button
+                    className="btn btn-secondary "
+                    data-bs-dismiss="modal"
+                    type="submit"
+                  >
                     Submit
                   </button>
                   <button
