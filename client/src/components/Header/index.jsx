@@ -1,5 +1,6 @@
 import logo from "../assets/logo.png";
-import FormClient from "../FormClient";
+import SignUp from "../SignUp";
+import SignIn from "../SignIn";
 
 export default function Header() {
   return (
@@ -13,12 +14,10 @@ export default function Header() {
         </a>
         <ul className="navbar-nav d-flex flex-row gap-2">
           <li className="navbar-item">
-            <button className="btn btn-info">
-              <p className="text-light m-0">Log In</p>
-            </button>
+            <SignIn />
           </li>
           <li className="navbar-item">
-            <FormClient />
+            <SignUp />
           </li>
         </ul>
       </div>

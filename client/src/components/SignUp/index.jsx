@@ -13,10 +13,9 @@ export default function FormClient() {
   );
 
   const onSubmit = async (e) => {
-    console.log(e.target);
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/signup", {
+      await fetch("http://localhost:5000/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +27,6 @@ export default function FormClient() {
           phone: state.phone,
         }),
       });
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -45,21 +43,21 @@ export default function FormClient() {
         type="button"
         className="btn btn-secondary"
         data-toggle="modal"
-        data-target="#registerClientModal"
+        data-target="#signUpClientModal"
       >
         <p className="text-light m-0">Sign up</p>
       </button>
       <div
         className="modal fade"
-        id="registerClientModal"
+        id="signUpClientModal"
         role="dialog"
-        aria-labelledby="registerClientModalLabel"
+        aria-labelledby="signUpClientModalLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="registerClientModalLabel">
+              <h5 className="modal-title" id="signUpClientModalLabel">
                 Add Client
               </h5>
               <button
@@ -75,7 +73,6 @@ export default function FormClient() {
               <form onSubmit={onSubmit}>
                 <label className="form-label">Name</label>
                 <input
-                  id="name"
                   type="text"
                   className="form-control mb-3"
                   value={state.name}
@@ -83,7 +80,6 @@ export default function FormClient() {
                 />
                 <label className="form-label">Email</label>
                 <input
-                  id="email"
                   type="email"
                   className="form-control mb-3"
                   value={state.email}
@@ -91,7 +87,6 @@ export default function FormClient() {
                 />
                 <label className="form-label">Password</label>
                 <input
-                  id="password"
                   type="password"
                   className="form-control mb-3"
                   value={state.password}
@@ -99,7 +94,6 @@ export default function FormClient() {
                 />
                 <label className="form-label">Phone</label>
                 <input
-                  id="phone"
                   type="text"
                   className="form-control mb-3"
                   value={state.phone}
