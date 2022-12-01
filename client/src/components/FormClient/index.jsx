@@ -11,11 +11,9 @@ export default function FormClient() {
     (prev, curr) => ({ ...prev, ...curr }),
     initState
   );
-  const onClick = (e) => {
-    e.preventDefault();
-  };
 
   const onSubmit = async (e) => {
+    console.log(e.target);
     e.preventDefault();
     try {
       const response = await fetch("http://localhost:5000/signup", {
@@ -48,9 +46,8 @@ export default function FormClient() {
         className="btn btn-secondary"
         data-toggle="modal"
         data-target="#registerClientModal"
-        onClick={onClick}
       >
-        <p className="text-light m-0">Log In</p>
+        <p className="text-light m-0">Sign up</p>
       </button>
       <div
         className="modal fade"
@@ -111,7 +108,7 @@ export default function FormClient() {
                 <div className="d-flex justify-content-between">
                   <button
                     className="btn btn-secondary "
-                    data-bs-dismiss="modal"
+                    // data-dismiss="modal"
                     type="submit"
                   >
                     Submit

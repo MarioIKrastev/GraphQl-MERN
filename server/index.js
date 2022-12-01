@@ -6,7 +6,7 @@ const cors = require("cors");
 const cookie = require("cookie-session");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
-const connectDB = require("./configDB/db");
+const connectDB = require("./config/db");
 const app = express();
 
 app.use(cors());

@@ -14,11 +14,11 @@ export default function Header() {
         <ul className="navbar-nav d-flex flex-row gap-2">
           <li className="navbar-item">
             <button className="btn btn-info">
-              <p className="text-light m-0">Sign In</p>
+              <p className="text-light m-0">Log In</p>
             </button>
           </li>
           <li className="navbar-item">
-          <FormClient />
+            <FormClient />
           </li>
         </ul>
       </div>
