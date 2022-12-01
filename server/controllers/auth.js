@@ -38,14 +38,14 @@ const postSignIn = async (req, res, next) => {
       return res.status(401).send({ message: "Invalid Password!" });
     }
 
-    req.session.token = tokenChecker(user._id);
+    const cookie = (req.session.token = tokenChecker(
+      user._id,
+      user.name,
+      user.email,
+      user.phone
+    ));
 
-    res.status(200).send({
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-    });
+    res.status(200).json({ cookie, logged: "Logged Successfully" });
   } catch (error) {
     console.log(error);
   }
@@ -55,7 +55,6 @@ const postSignOut = async (req, res, next) => {
     req.session = null;
     return res.status(200).send({ message: "You've been signed out!" });
   } catch (error) {
-    this.next(err);
     console.log(error);
   }
 };
