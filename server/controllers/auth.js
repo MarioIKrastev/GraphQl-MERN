@@ -2,7 +2,6 @@ const Client = require("../models/Client");
 const bcrypt = require("bcryptjs");
 
 const regEx = /@[a-zA-Z]+.[a-zA-Z]+/gi;
-
 const postSignup = async (req, res, next) => {
   const { name, email, password, phone } = req.body;
   try {
