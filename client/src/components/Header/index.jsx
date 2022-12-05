@@ -1,6 +1,7 @@
 import logo from "../assets/logo.png";
 import SignUp from "../SignUp";
 import SignIn from "../SignIn";
+import SignOut from "../SignOut";
 
 export default function Header() {
   return (
@@ -18,6 +19,9 @@ export default function Header() {
           </li>
           <li className="navbar-item">
             <SignUp />
+          </li>
+          <li className="navbar-item">
+            <SignOut />
           </li>
         </ul>
       </div>

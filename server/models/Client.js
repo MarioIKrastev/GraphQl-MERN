@@ -15,6 +15,10 @@ const Client = mongoose.model(
     phone: {
       type: String,
     },
+    refreshToken: {
+      type: String,
+      default: "",
+    },
   })
 );
 

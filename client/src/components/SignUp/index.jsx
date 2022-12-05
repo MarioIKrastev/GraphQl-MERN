@@ -1,6 +1,7 @@
 import { useReducer } from "react";
+import { Router } from "react-router-dom";
 
-export default function FormClient() {
+export default function SignUp() {
   const initState = {
     name: "",
     email: "",
@@ -13,7 +14,7 @@ export default function FormClient() {
   );
 
   const onSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     try {
       await fetch("http://localhost:5000/signup", {
         method: "POST",
@@ -27,6 +28,7 @@ export default function FormClient() {
           phone: state.phone,
         }),
       });
+      Router.push("/");
     } catch (error) {
       console.log(error);
     }

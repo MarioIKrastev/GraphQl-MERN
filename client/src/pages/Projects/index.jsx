@@ -1,8 +1,8 @@
-import Spinner from "../Spinner";
+import Spinner from "../../components/Spinner";
 import { useQuery } from "@apollo/client";
 import { GET_PROJECTS } from "../../queries/projects";
-import ProjectCard from "../ProjectCard";
-import Message from "../Message";
+import ProjectCard from "../../components/ProjectCard";
+import Message from "../../components/Message";
 
 export default function Projects() {
   const { loading, error, data } = useQuery(GET_PROJECTS);

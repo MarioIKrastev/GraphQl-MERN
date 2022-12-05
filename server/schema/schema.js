@@ -37,6 +37,7 @@ const ClientType = new GraphQLObjectType({
     name: { type: GraphQLString },
     email: { type: GraphQLString },
     phone: { type: GraphQLString },
+    refreshToken: { type: GraphQLString },
     projects: {
       type: new GraphQLList(ProjectType),
       async resolve(parent, {}) {

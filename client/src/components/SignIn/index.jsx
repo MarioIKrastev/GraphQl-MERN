@@ -1,6 +1,7 @@
 import { useReducer } from "react";
+import { Router } from "react-router-dom";
 
-export default function FormClient() {
+export default function SignIn() {
   const initState = {
     email: "",
     password: "",
@@ -23,8 +24,9 @@ export default function FormClient() {
           password: state.password,
         }),
       });
-      const { cookie } = await response.json();
-      console.log(cookie);
+      const { loginToken } = await response.json();
+      console.log(loginToken);
+      Router.push("/");
     } catch (error) {
       console.log(error);
     }

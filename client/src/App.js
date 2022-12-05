@@ -9,6 +9,8 @@ import Project from "./pages/Project";
 import { cache } from "./utils/cache";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
+import SignOut from "./components/SignOut";
+import Projects from "./pages/Projects";
 
 const apoloClient = new ApolloClient({
   uri: "http://localhost:5000/graphql",
@@ -24,9 +26,11 @@ function App() {
           <div className="container">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/projects/:id" element={<Project />} />
+              <Route path="signup" element={<SignUp />} />
+              <Route path="signin" element={<SignIn />} />
+              <Route path="signout" element={<SignOut />} />
+              <Route path="projects" element={<Projects />} />
+              <Route path="projects/:id" element={<Project />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

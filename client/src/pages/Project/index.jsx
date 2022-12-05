@@ -24,7 +24,7 @@ export default function Project() {
           )}`}
         >
           <Link
-            to="/"
+            to="/projects"
             className="btn btn-light d-inline ms-auto border border-secondary"
           >
             Go back
