@@ -1,3 +1,5 @@
+import axios from "axios";
+
 import { useReducer } from "react";
 import { Router } from "react-router-dom";
 
@@ -13,21 +15,16 @@ export default function SignUp() {
     initState
   );
 
+  const data = {
+    name: state.name,
+    email: state.email,
+    password: state.password,
+    phone: state.phone,
+  };
   const onSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     try {
-      await fetch("http://localhost:5000/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: state.name,
-          email: state.email,
-          password: state.password,
-          phone: state.phone,
-        }),
-      });
+      await axios.post("http://localhost:5000/api/signup", data);
       Router.push("/");
     } catch (error) {
       console.log(error);
@@ -102,11 +99,7 @@ export default function SignUp() {
                   onChange={(e) => updateState({ phone: e.target.value })}
                 />
                 <div className="d-flex justify-content-between">
-                  <button
-                    className="btn btn-secondary "
-                    // data-dismiss="modal"
-                    type="submit"
-                  >
+                  <button className="btn btn-secondary " type="submit">
                     Submit
                   </button>
                   <button

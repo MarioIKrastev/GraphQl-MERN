@@ -6,12 +6,12 @@ const verifyToken = require("../middlewares/verifyToken");
 
 const router = express.Router();
 
-router.post("/signup", authController.postSignup);
+router.post("/api/signup", authController.postSignup);
 
-router.post("/signin", authController.postSignIn);
+router.post("/api/signin", authController.postSignIn);
 
-router.post("/signout", verifyToken, authController.postSignOut);
+router.post("/api/signout", authController.postSignOut);
 
-router.get("/token", refreshToken);
+// router.get("/token", refreshToken);
 
 module.exports = router;

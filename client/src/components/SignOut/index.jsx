@@ -1,16 +1,17 @@
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../slices/authSlice";
+
 export default function SignOut() {
+  const dispatch = useDispatch();
+  const [cookies, setCookie, removeCookie] = useCookies(["Authorization"]);
+  const navigate = useNavigate();
+
   const onSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await fetch("http://localhost:5000/signout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    removeCookie("Authorization");
+    dispatch(logout());
+    navigate("/");
   };
   return (
     <>

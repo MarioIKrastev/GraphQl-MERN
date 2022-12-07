@@ -1,6 +1,5 @@
 const Client = require("../models/Client");
 const bcrypt = require("bcryptjs");
-const refreshToken = require("../utils/refreshToken");
 const accessToken = require("../utils/accessToken");
 const jwt = require("jsonwebtoken");
 
@@ -34,37 +33,29 @@ const postSignIn = async (req, res, next) => {
     const user = await Client.findOne({
       email,
     });
-    const loginToken = accessToken(user._id, user.name, user.email, user.phone);
-    const renewToken = refreshToken(
-      user._id,
-      user.name,
-      user.email,
-      user.phone
-    );
-    const passwordValidation = bcrypt.compareSync(password, user.password);
-
+    const data = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+    };
     if (!user)
       return res
         .status(404)
         .send({ message: "User Not Found. Please sign up." });
-
+    const passwordValidation = bcrypt.compareSync(password, user.password);
     if (!passwordValidation) {
       return res.status(401).send({ message: "Invalid Password!" });
     }
-
-    await Client.updateOne({ email }, { refreshToken: renewToken });
-    res
-      .status(200)
-      .cookie("Bearer", renewToken, { httpOnly: true })
-      .json({ message: "Logged Successfully" });
+    accessToken(data, req, res);
   } catch (error) {
     res.status(404).json({ msg: "Email Not Found!" });
     console.log(error);
   }
 };
 const postSignOut = async (req, res, next) => {
-  const cookies = req.headers.cookie;
-  const prevToken = cookies.split("=")[1];
+  const token = req.headers.cookie;
+
+  const prevToken = token.split("=")[1];
   if (!prevToken) {
     return res.status(400).json({ message: "Couldn't find token" });
   }
@@ -77,6 +68,7 @@ const postSignOut = async (req, res, next) => {
     req.cookies["Bearer"] = "";
     return res.status(200).json({ message: "Successfully Logged Out" });
   });
+  console.log(token);
 };
 
 module.exports = { postSignup, postSignIn, postSignOut };
