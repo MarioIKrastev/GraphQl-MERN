@@ -46,15 +46,6 @@ const ClientType = new GraphQLObjectType({
     },
   }),
 });
-//Registration type
-const Register = new GraphQLObjectType({
-  name: "Register",
-  fields: () => ({
-    name: { type: GraphQLString },
-    email: { type: GraphQLString },
-    password: { type: GraphQLString },
-  }),
-});
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
@@ -91,25 +82,6 @@ const RootQuery = new GraphQLObjectType({
 const mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
-    registerClient: {
-      type: ClientType,
-      args: {
-        name: { type: GraphQLNonNull(GraphQLString) },
-        email: { type: GraphQLNonNull(GraphQLString) },
-        password: { type: GraphQLNonNull(GraphQLString) },
-        phone: { type: GraphQLNonNull(GraphQLString) },
-      },
-      async resolve(_, args) {
-        const client = new Client({
-          name: args.name,
-          email: args.email,
-          password: args.password,
-          phone: args.phone,
-        });
-
-        return await client.save();
-      },
-    },
     deleteClient: {
       type: ClientType,
       args: {

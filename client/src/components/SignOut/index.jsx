@@ -11,6 +11,7 @@ export default function SignOut() {
   const onSubmit = async (e) => {
     removeCookie("Authorization");
     dispatch(logout());
+    localStorage.clear();
     navigate("/");
   };
   return (

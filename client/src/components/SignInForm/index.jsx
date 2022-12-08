@@ -5,6 +5,8 @@ import { Cookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { login } from "../../slices/authSlice";
+import { useQuery } from "@apollo/client";
+import { GET_CLIENT } from "../../queries/client";
 
 export default function SignInForm() {
   const cookies = new Cookies();
@@ -26,18 +28,20 @@ export default function SignInForm() {
         email: state.email,
         password: state.password,
       });
-      const token = response.data.token;
-      const { id, name, email } = jwt_decode(token);
-
-      cookies.set("Authorization", `Bearer=${token}`);
-      dispatch(
-        login({
-          id,
-          name,
-          email,
-        })
-      );
-      navigate("/dashboard");
+      if (response.status === 200) {
+        const token = response.data.token;
+        const { id, name, email } = jwt_decode(token);
+        localStorage.setItem("SignedIn", true);
+        cookies.set("Authorization", `Bearer=${token}`);
+        dispatch(
+          login({
+            id,
+            name,
+            email,
+          })
+        );
+        navigate("/dashboard");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -48,14 +52,14 @@ export default function SignInForm() {
   };
   return (
     <div
-      className="card"
+      className="card w-25 container mt-5"
       id="signInClient"
       role="dialog"
       aria-labelledby="signInClientLabel"
       aria-hidden="true"
     >
       <div className="dialog" role="document">
-        <div className="content">
+        <div className="content p-4">
           <div className="header">
             <h5 className="title" id="signInClientLabel">
               Sign In
