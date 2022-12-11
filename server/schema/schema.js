@@ -63,6 +63,13 @@ const RootQuery = new GraphQLObjectType({
         return await Project.findById(args.id);
       },
     },
+    userProjects: {
+      type: new GraphQLList(ProjectType),
+      args: { id: { type: GraphQLID } },
+      async resolve(_, args) {
+        return await Project.find().where({ clientId: args.id });
+      },
+    },
     clients: {
       type: new GraphQLList(ClientType),
       async resolve(_, {}) {

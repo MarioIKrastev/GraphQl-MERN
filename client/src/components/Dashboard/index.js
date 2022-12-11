@@ -1,51 +1,42 @@
-import { GET_CLIENT } from "../../queries/client";
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
+import { GET_USERPROJECTS } from "../../queries/projects";
 import { Cookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
+import FormProject from "../FormProject";
 
 import ProjectCard from "../ProjectCard";
-import Spinner from "../Spinner";
-import { useCallback } from "react";
-import { useEffect, useState } from "react";
 
 export default function Dashboard() {
-  const [projects, setProjects] = useState(null);
+  const navigate = useNavigate();
   const cookie = new Cookies();
-  const userId = jwt_decode(cookie.get("Authorization").split("=")[1]);
+  const token = cookie.get("Authorization").split("=")[1];
+  const user = jwt_decode(token);
 
-  const { loading, error, data } = useQuery(GET_CLIENT, {
+  const { loading, error, data } = useQuery(GET_USERPROJECTS, {
     variables: {
-      id: userId.id,
+      id: user.id,
     },
   });
-  if (loading) return <Spinner />;
-  console.log(data.client.projects);
-  // const memoize = useCallback(async () => {
-  //   setProjects(data.projects);
-  // }, [data.projects]);
-
-  // useEffect(() => {
-  //   memoize();
-  // }, [memoize]);
-
+  if (!user && token === undefined) return navigate("/");
   return (
     <>
-      {data && data.client.projects.length !== 0 ? (
-        data.client.projects.map((project) => (
-          <div className="container d-flex direction-column">
+      {!loading && !error && data.userProjects.length !== 0 ? (
+        data.userProjects.map((project) => (
+          <div className="container d-flex flex-column" key={project.id}>
             <ProjectCard key={project.id} project={project} />
           </div>
         ))
       ) : (
-        <div className="container d-flex direction-column">
+        <div className="container d-flex flex-column align-items-center">
           <div className="pt-3 d-flex justify-content-center align-items-center w-100">
             <p className="text-dark fs-1 fw-bold text-info">
               There is No Projects
             </p>
           </div>
+          <FormProject />
         </div>
       )}
     </>
-    // <h1>das</h1>
   );
 }

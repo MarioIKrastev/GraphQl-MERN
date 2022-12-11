@@ -1,18 +1,18 @@
 import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { logout } from "../../slices/authSlice";
 
 export default function SignOut() {
   const dispatch = useDispatch();
+  const navigation = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(["Authorization"]);
-  const navigate = useNavigate();
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     removeCookie("Authorization");
     dispatch(logout());
     localStorage.clear();
-    navigate("/");
+    return navigation("/");
   };
   return (
     <>

@@ -5,6 +5,7 @@ const GET_CLIENT = gql`
     client(id: $id) {
       id
       projects {
+        id
         name
         description
         status

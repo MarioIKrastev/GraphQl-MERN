@@ -6,7 +6,7 @@ import Message from "../../components/Message";
 import ClientInfo from "../../components/ClientInfo";
 import { noClient } from "./demo";
 import { borderColor, projectStatus } from "../../utils/projectStatus";
-import DeleteProject from "../../components/buttons/DeleteProject";
+import DeleteProject from "../../components/buttons/DeleteProjectButton/DeleteProject";
 
 export default function Project() {
   const { id } = useParams();
@@ -24,7 +24,7 @@ export default function Project() {
           )}`}
         >
           <Link
-            to="/projects"
+            to="/dashboard"
             className="btn btn-light d-inline ms-auto border border-secondary"
           >
             Go back
@@ -36,7 +36,7 @@ export default function Project() {
             {data.project.status}
           </p>
           <ClientInfo client={data.project.client} data={noClient} />
-          <DeleteProject projectId={id} />
+          <DeleteProject projectId={id} isPage />
         </div>
       )}
     </>
