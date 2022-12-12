@@ -1,5 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { FaUser } from "react-icons/fa";
+
 import logo from "../assets/logo.png";
 import SignUp from "../SignUp";
 import SignIn from "../SignIn";
@@ -22,6 +24,11 @@ export default function Header() {
           </button>
           {signedIn === "true" ? (
             <ul className="navbar-nav d-flex flex-row gap-2">
+              <li className="navbar-item">
+                <button type="button" className="btn btn-dark rounded-circle">
+                  <FaUser />
+                </button>
+              </li>
               <li className="navbar-item">
                 <button
                   type="button"

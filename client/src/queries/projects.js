@@ -32,6 +32,10 @@ const GET_USERPROJECTS = gql`
       name
       description
       status
+      client {
+        id
+        name
+      }
     }
   }
 `;

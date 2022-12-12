@@ -124,31 +124,15 @@ export default function FormProject() {
                   <option value="progress">In Progress</option>
                   <option value="completed">Completed</option>
                 </select>
-                {/* 
-                    //When admin role is implemented
-                    <label className="form-label">Client</label>
-                    <select
-                      id="clientId"
-                      className="form-select mb-5"
-                      value={state.clientId}
-                      onChange={(e) =>
-                        updateState({
-                          clientId: e.target.value,
-                        })
-                      }
-                    >
-                      <option value="">Select Client</option>
-                      {data.clients.map((client) => (
-                        <option key={client.id} value={client.id}>
-                          {client.name}
-                        </option>
-                      ))}
-                    </select> */}
                 <div className="d-flex justify-content-between">
                   <button className="btn btn-secondary" type="submit">
                     Submit
                   </button>
-                  <button className="btn btn-primary " type="submit">
+                  <button
+                    className="btn btn-primary"
+                    data-dismiss="modal"
+                    type="button"
+                  >
                     Close
                   </button>
                 </div>

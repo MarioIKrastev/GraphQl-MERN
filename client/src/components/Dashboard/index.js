@@ -1,42 +1,35 @@
-import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_USERPROJECTS } from "../../queries/projects";
-import { Cookies } from "react-cookie";
-import jwt_decode from "jwt-decode";
 import FormProject from "../FormProject";
-
+import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import ProjectCard from "../ProjectCard";
+import Spinner from "../Spinner";
 
 export default function Dashboard() {
-  const navigate = useNavigate();
-  const cookie = new Cookies();
-  const token = cookie.get("Authorization").split("=")[1];
-  const user = jwt_decode(token);
-
+  const id = useSelector((state) => state.client.id);
   const { loading, error, data } = useQuery(GET_USERPROJECTS, {
     variables: {
-      id: user.id,
+      id: id,
     },
   });
-  if (!user && token === undefined) return navigate("/");
+  if (!id) return <Navigate to="/" />;
+  if (loading) return <Spinner />;
+
   return (
     <>
-      {!loading && !error && data.userProjects.length !== 0 ? (
-        data.userProjects.map((project) => (
-          <div className="container d-flex flex-column" key={project.id}>
+      <div className="container d-flex flex-column align-items-center">
+        <FormProject />
+        {!loading && !error && data.userProjects.length !== 0 ? (
+          data.userProjects.map((project) => (
             <ProjectCard key={project.id} project={project} />
-          </div>
-        ))
-      ) : (
-        <div className="container d-flex flex-column align-items-center">
-          <div className="pt-3 d-flex justify-content-center align-items-center w-100">
-            <p className="text-dark fs-1 fw-bold text-info">
-              There is No Projects
-            </p>
-          </div>
-          <FormProject />
-        </div>
-      )}
+          ))
+        ) : (
+          <p className="text-dark fs-1 fw-bold text-info">
+            There is No Projects
+          </p>
+        )}
+      </div>
     </>
   );
 }

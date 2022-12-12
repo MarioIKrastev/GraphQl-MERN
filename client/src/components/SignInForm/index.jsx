@@ -1,12 +1,13 @@
 import { useReducer } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
 import { Cookies } from "react-cookie";
 import { login } from "../../slices/authSlice";
+import { clientInfo } from "../../slices/clientSlice";
 
 export default function SignInForm() {
   const navigation = useNavigate();
@@ -37,6 +38,14 @@ export default function SignInForm() {
           id,
           name,
           email,
+        })
+      );
+      dispatch(
+        clientInfo({
+          id,
+          name,
+          email,
+          isAuthorized: true,
         })
       );
       navigation("/dashboard");

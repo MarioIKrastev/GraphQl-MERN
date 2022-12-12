@@ -2,6 +2,7 @@ import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../slices/authSlice";
+import { clientInfo } from "../../slices/clientSlice";
 
 export default function SignOut() {
   const dispatch = useDispatch();
@@ -11,6 +12,14 @@ export default function SignOut() {
   const onSubmit = (e) => {
     removeCookie("Authorization");
     dispatch(logout());
+    dispatch(
+      clientInfo({
+        id: "",
+        name: "",
+        email: "",
+        isAuthorized: false,
+      })
+    );
     localStorage.clear();
     return navigation("/");
   };
