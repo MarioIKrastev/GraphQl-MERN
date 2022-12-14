@@ -51,7 +51,6 @@ export default function SignUp() {
         id="signUpClientModal"
         role="dialog"
         aria-labelledby="signUpClientModalLabel"
-        aria-hidden="true"
       >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
@@ -65,7 +64,7 @@ export default function SignUp() {
                 data-dismiss="modal"
                 aria-label="Close"
               >
-                <span aria-hidden="true">&times;</span>
+                <span>&times;</span>
               </button>
             </div>
             <div className="modal-body">

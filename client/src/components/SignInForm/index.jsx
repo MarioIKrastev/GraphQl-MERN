@@ -1,6 +1,6 @@
 import { useReducer } from "react";
 import { useDispatch } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 import axios from "axios";
 import jwt_decode from "jwt-decode";
@@ -11,8 +11,10 @@ import { clientInfo } from "../../slices/clientSlice";
 
 export default function SignInForm() {
   const navigation = useNavigate();
-  const cookies = new Cookies();
   const dispatch = useDispatch();
+
+  const isSignedIn = localStorage.getItem("SignedIn");
+  const cookies = new Cookies();
   const initState = {
     email: "",
     password: "",
@@ -22,6 +24,9 @@ export default function SignInForm() {
     initState
   );
 
+  if (isSignedIn === "true") {
+    return <Navigate to="/" />;
+  }
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -30,7 +35,7 @@ export default function SignInForm() {
         password: state.password,
       });
       const token = response.data.token;
-      const { id, name, email } = jwt_decode(token);
+      const { id, name, email, phone } = jwt_decode(token);
       localStorage.setItem("SignedIn", true);
       cookies.set("Authorization", `Bearer=${token}`);
       dispatch(
@@ -45,6 +50,7 @@ export default function SignInForm() {
           id,
           name,
           email,
+          phone,
           isAuthorized: true,
         })
       );
@@ -63,7 +69,6 @@ export default function SignInForm() {
       id="signInClient"
       role="dialog"
       aria-labelledby="signInClientLabel"
-      aria-hidden="true"
     >
       <div className="dialog" role="document">
         <div className="content p-4">

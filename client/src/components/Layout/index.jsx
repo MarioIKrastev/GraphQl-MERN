@@ -1,11 +1,12 @@
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 
-import logo from "../assets/logo.png";
+import logo from "../assets/wrc.png";
 import SignUp from "../SignUp";
 import SignIn from "../SignIn";
 import SignOut from "../SignOut";
+import { Box, Button } from "@mui/material";
 
 export default function Header() {
   const navigation = useNavigate();
@@ -15,28 +16,37 @@ export default function Header() {
     <>
       <nav className="navbar bg-light p-0">
         <div className="container">
-          <button
-            type="button"
-            className="btn btn-light"
+          <Box
+            sx={{ width: "100px", height: "100px", cursor: "pointer" }}
             onClick={() => navigation("/")}
           >
-            <img src={logo} alt="logo" className="mr-2" />
-          </button>
+            <img src={logo} alt="logo" width={100} height={100} />
+          </Box>
           {signedIn === "true" ? (
             <ul className="navbar-nav d-flex flex-row gap-2">
               <li className="navbar-item">
-                <button type="button" className="btn btn-dark rounded-circle">
+                <Button
+                  type="button"
+                  variant="contained"
+                  sx={{
+                    height: "100%",
+                    p: 0,
+                    "&:hover": { backgroundColor: "primary.light" },
+                  }}
+                  onClick={() => navigation("/profile")}
+                >
                   <FaUser />
-                </button>
+                </Button>
               </li>
               <li className="navbar-item">
-                <button
+                <Button
                   type="button"
-                  className="btn btn-secondary"
+                  variant="contained"
+                  sx={{ "&:hover": { backgroundColor: "primary.light" } }}
                   onClick={() => navigation("/dashboard")}
                 >
-                  <p className="text-light m-0">Dashboard</p>
-                </button>
+                  <p style={{ margin: 0 }}>Dashboard</p>
+                </Button>
               </li>
               <li className="navbar-item">
                 <SignOut />

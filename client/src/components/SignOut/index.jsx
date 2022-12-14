@@ -1,6 +1,7 @@
+import { Button } from "@mui/material";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { logout } from "../../slices/authSlice";
 import { clientInfo } from "../../slices/clientSlice";
 
@@ -10,6 +11,7 @@ export default function SignOut() {
   const [cookies, setCookie, removeCookie] = useCookies(["Authorization"]);
 
   const onSubmit = (e) => {
+    e.preventDefault();
     removeCookie("Authorization");
     dispatch(logout());
     dispatch(
@@ -25,9 +27,22 @@ export default function SignOut() {
   };
   return (
     <>
-      <button type="button" className="btn btn-secondary" onClick={onSubmit}>
-        <p className="text-light m-0">Sign out</p>
-      </button>
+      <Button
+        type="button"
+        variant="contained"
+        sx={{
+          backgroundColor: "secondary.main",
+          "&:hover": {
+            backgroundColor: "tertiary.main",
+          },
+          "&:hover > p": {
+            color: "primary.main",
+          },
+        }}
+        onClick={onSubmit}
+      >
+        <p style={{ margin: 0 }}>Sign out</p>
+      </Button>
     </>
   );
 }

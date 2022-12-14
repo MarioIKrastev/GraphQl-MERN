@@ -1,39 +1,58 @@
-import { Link } from "react-router-dom";
-import { GET_USERPROJECTS } from "../../queries/projects";
+import { useNavigate } from "react-router-dom";
 import { projectStatus } from "../../utils/projectStatus";
-import DeleteProject from "../buttons/DeleteProjectButton/DeleteProject";
+import { Box, Card, Grid, Badge, useTheme } from "@mui/material";
+import { HiWrenchScrewdriver } from "react-icons/hi2";
 
-export default function ProjectCard({ project }) {
+export default function ProjectCard({ project, item }) {
+  const theme = useTheme();
+  const navigation = useNavigate();
+
+  const clickHandler = () => {
+    return navigation(`/dashboard/${project.id}`);
+  };
   return (
-    <div className="col-md-6 p-0">
-      <div className="card mb-3">
-        <div className="card-body ">
-          <div className="d-flex gap-3 align-items-center flex-column">
-            <div className="w-100 d-flex gap-3 justify-content-between">
-              <h5 className="card-title m-0" style={{ maxWidth: "15rem" }}>
-                {project.name}
-              </h5>
-              <p className="small m-0">
-                Status:
-                <span
-                  className={`ms-2 fw-bold ${projectStatus(project.status)}`}
-                >
-                  {project.status}
-                </span>
-              </p>
-            </div>
-            <div className="w-100 d-flex gap-2 justify-content-end">
-              <Link
-                className="btn btn-light border border-primary"
-                to={`/dashboard/${project.id}`}
-              >
-                View
-              </Link>
-              <DeleteProject projectId={project.id} />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Grid item xs={item}>
+      <Card
+        onClick={clickHandler}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 3,
+          p: 3,
+          cursor: "pointer",
+          "&:hover > span > *": {
+            backgroundColor: theme.palette.primary.light,
+          },
+        }}
+        elevation={3}
+      >
+        <Badge
+          overlap="circular"
+          badgeContent=""
+          color={projectStatus(project.status)}
+        >
+          <HiWrenchScrewdriver
+            style={{
+              borderRadius: "50%",
+              backgroundColor: theme.palette.primary.main,
+              width: "200px",
+              height: "200px",
+              color: theme.palette.secondary.main,
+            }}
+          />
+        </Badge>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <h2>{project.name}</h2>
+        </Box>
+      </Card>
+    </Grid>
   );
 }
