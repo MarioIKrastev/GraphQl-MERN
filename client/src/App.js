@@ -8,7 +8,6 @@ import NotFound from "./pages/404";
 import Layout from "./components/Layout";
 import Project from "./pages/Project";
 import SignUp from "./components/SignUp";
-import SignInForm from "./components/SignInForm";
 import SignOut from "./components/SignOut";
 import Dashboard from "./components/Dashboard";
 import Profile from "./components/Profile";
@@ -27,7 +26,6 @@ function App() {
               <Route path="/" element={<Layout />}>
                 <Route path="/" element={<Home />} />
                 <Route path="signup" element={<SignUp />} />
-                <Route path="signin" element={<SignInForm />} />
                 <Route path="signout" element={<SignOut />} />
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="dashboard/:id" element={<Project />} />

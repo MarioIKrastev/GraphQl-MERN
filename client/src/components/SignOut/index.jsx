@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { logout } from "../../slices/authSlice";
 import { clientInfo } from "../../slices/clientSlice";
 

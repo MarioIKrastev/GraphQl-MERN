@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ProjectCard from "../ProjectCard";
 import Spinner from "../Spinner";
-import { Container, Box, Button, Grid } from "@mui/material";
+import { Container, Box, Grid } from "@mui/material";
 import { projects } from "../../slices/projectsSlice";
 
 export default function Dashboard() {

@@ -11,9 +11,11 @@ const clientSlice = createSlice({
   },
   reducers: {
     clientInfo(state, action) {
+      console.log(action.payload);
       state.id = action.payload.id;
       state.name = action.payload.name;
       state.email = action.payload.email;
+      state.phone = action.payload.phone;
       state.isAuthorized = action.payload.isAuthorized;
     },
   },
